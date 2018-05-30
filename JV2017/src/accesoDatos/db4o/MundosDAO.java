@@ -4,7 +4,7 @@
  * Colabora en el patron Fachada.
  * @since: prototipo2.0
  * @source: MundosDAO.java 
- * @version: 2.1 - 2018/05/26
+ * @version: 2.1 - 2018/05/30
  * @author: Grupo 3
  */
 
@@ -247,5 +247,25 @@ public class MundosDAO implements OperacionesDAO {
 		else{
 			throw new DatosException("Obtener: " + nombre + "no existe");
 		}
+		
+		/**
+     *  Comprueba que el nuevo mundo creado no existe
+     *    @param mundo - Nuevo mundo creado.
+     *  @throws DatosException - si el mundo ya existía
+     */
+
+    public void altaMundo(Object obj) throws DatosException{
+
+        assert obj != null;
+        Mundo mundo = (Mundo)obj;
+        try{
+            obtener(mundo.getNombre());
+        }
+        catch (DatosException e){
+            db.store(mundo);
+            return;
+        }
+        throw new DatosException("Alta: " + mundo.getNombre() + "ya existe");
+    }
 	}
 } // class

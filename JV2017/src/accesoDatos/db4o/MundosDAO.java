@@ -161,14 +161,15 @@ public class MundosDAO implements OperacionesDAO {
 	@Override
 	public void alta(Object obj) throws DatosException  {
 		assert obj != null;
-		Mundo mundoNuevo = (Mundo) obj;										// Para conversión cast
-		int posicionInsercion = obtenerPosicion(mundoNuevo.getNombre()); 
-		if (posicionInsercion < 0) {
-			datosMundos.add(-posicionInsercion - 1, mundoNuevo); 			// Inserta la sesión en orden.
-		}
-		else {
-			throw new DatosException("Alta: "+ mundoNuevo.getNombre() + " ya existe");
-		}
+        Mundo mundo = (Mundo)obj;
+        try{
+            obtener(mundo.getNombre());
+        }
+        catch (DatosException e){
+            db.store(mundo);
+            return;
+        }
+        throw new DatosException("Alta: " + mundo.getNombre() + "ya existe");
 	}
 
 	/**
@@ -259,24 +260,8 @@ public class MundosDAO implements OperacionesDAO {
 			throw new DatosException("Obtener: " + nombre + "no existe");
 		}
 		
-		/**
-     *  Comprueba que el nuevo mundo creado no existe
-     *    @param mundo - Nuevo mundo creado.
-     *  @throws DatosException - si el mundo ya existía
-     */
+	
 
-    public void altaMundo(Object obj) throws DatosException{
-
-        assert obj != null;
-        Mundo mundo = (Mundo)obj;
-        try{
-            obtener(mundo.getNombre());
-        }
-        catch (DatosException e){
-            db.store(mundo);
-            return;
-        }
-        throw new DatosException("Alta: " + mundo.getNombre() + "ya existe");
-    }
+    
 	}
 } // class

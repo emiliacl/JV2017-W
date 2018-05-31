@@ -162,17 +162,20 @@ public class PatronesDAO implements OperacionesDAO {
 	 * @throws DatosException - si no existe.
 	 */
 	@Override
-	public Patron baja(String nombre) throws DatosException  {
-		assert (nombre != null);
-		int posicion = obtenerPosicion(nombre); 									// En base 1
-		if (posicion > 0) {
-			return datosPatrones.remove(posicion - 1); 								// En base 0
-		}
-		else {
-			throw new DatosException("Baja: "+ nombre + " no existe");
-		}
+	public Patron baja(String nombrePatron) throws DatosException  {
+		assert nombrePatron != null;
+		assert nombrePatron != ""; 								
+		assert nombrePatron != " ";
+		Patron patron = null;
+			try {
+			patron = obtener(nombrePatron);
+				db.delete(patron);
+				return patron;
+				}
+			catch (DatosException e) {
+				throw new DatosException("Baja: " + nombrePatron + " no está dentro de la base de datos.");
+			}
 	}
-
 	/**
 	 *  Actualiza datos de un Mundo reemplazando el almacenado por el recibido.
 	 *	@param obj - Patron con las modificaciones.

@@ -13,8 +13,7 @@ import java.io.Serializable;
 
 import util.Fecha;
 
-public class SesionUsuario implements Serializable {
-	
+public class SesionUsuario implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	private Usuario usr;  
 	private Fecha fecha; 
@@ -52,14 +51,13 @@ public class SesionUsuario implements Serializable {
 	public EstadoSesion getEstado() {
 		return estado;
 	}
-	
 	/**
 	 * Obtiene idSesion concatenando idUsr + un número como texto:
 	 * @return idSesion único generado.
 	 */
 	public String getIdSesion() {
-		return	String.format("%s-%s",
-				usr.getIdUsr(), fecha.toStringMarcaTiempo());
+		return	usr.getIdUsr() + "-" + fecha.getAño() + fecha.getMes() + fecha.getDia() 
+		+ fecha.getHora() + fecha.getMinuto() + fecha.getSegundo();
 	}
 
 	public void setUsr(Usuario usr) {

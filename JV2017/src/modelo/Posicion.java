@@ -12,45 +12,74 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Posicion implements Serializable {
-	
+public class Posicion implements Cloneable, Serializable {
 	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 
+	/**
+	 * Constructor convencional.
+	 * Establece el valor inicial de cada uno de los atributos.
+	 * Recibe parámetros que se corresponden con los atributos.
+	 * Utiliza métodos set... para la posible verificación.
+	 * @param x
+	 * @param y
+	 */
 	public Posicion(int x, int y) {
 		setX(x);
 		setY(y);
 	}
-	
+
+	/**
+	 * Constructor por defecto.
+	 * Establece el valor inicial, por defecto, de cada uno de los atributos.
+	 * Llama al constructor convencional de la propia clase.
+	 */
 	public Posicion() {
 		this(0, 0);
 	}
 
-	public Posicion(Posicion posicion) {
-		x = posicion.x;
-		y = posicion.y;
+	/**
+	 * Constructor copia.
+	 * Establece el valor inicial de cada uno de los atributos a partir de
+	 * los valores obtenidos de un objeto de su misma clase.
+	 * @param p
+	 */
+	public Posicion(Posicion p) {
+		this(p.x, p.y);
 	}
 
+	/**
+	 * @return the x
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * @return the y
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * @param x the x to set
+	 */
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	/**
+	 * @param y the y to set
+	 */
 	public void setY(int y) {
 		this.y = y;
 	}
 
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
-	}
-	
 	@Override
 	public String toString() {
-		return "[" + x + "," + y + "]";
+		return "Posicion [x=" + x + ", y=" + y + "]";
 	}
 
 	/**
@@ -81,14 +110,15 @@ public class Posicion implements Serializable {
 			if (this == obj) {
 				return true;
 			}
-			if (x == ((Posicion) obj).x 
-					&& y == ((Posicion) obj).y) {
+			if (x == ((Posicion)obj).x &&
+					y == ((Posicion)obj).y
+					) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Genera un clon del propio objeto realizando una copia profunda.
 	 * @return el objeto clonado.
@@ -99,6 +129,4 @@ public class Posicion implements Serializable {
 		return new Posicion(this);
 	}
 
-
-	
 } //class
